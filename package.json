@@ -1,0 +1,11 @@
+{
+  "name": "@butter-cream/root",
+  "private": true,
+  "license": "MIT",
+  "engines": {
+    "node": "18"
+  },
+  "workspaces": [
+    "packages/*"
+  ]
+}
