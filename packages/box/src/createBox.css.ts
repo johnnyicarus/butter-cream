@@ -1,4 +1,4 @@
-import { createSprinkles, defineProperties } from '@vanilla-extract/sprinkles';
+import { defineProperties } from '@vanilla-extract/sprinkles';
 
 import { globals } from '../../core/src/globals';
 import { defaultSizes } from './defaultSizes';
@@ -67,7 +67,7 @@ export function createBox<
     ...spacingScale.halfNegative,
   };
 
-  const boxPropertiesResponsive = defineProperties({
+  const boxProperties = defineProperties({
     ...getConditionsFromMedia<U>({
       mediaQueries,
       defaultMediaQueryKey,
@@ -159,24 +159,5 @@ export function createBox<
     },
   });
 
-  // const boxPropertiesVisual = defineProperties({
-  //   conditions: {
-  //     lightMode: {
-  //       '@media': '(prefers-color-scheme: light)',
-  //     },
-  //     darkMode: { '@media': '(prefers-color-scheme: dark)' },
-  //   },
-  //   defaultCondition: ['lightMode', 'darkMode'],
-  //   properties: {
-  //     backgroundColor: { ...themeContract.box.backgroundColor },
-  //     color: { ...themeContract.box.textColor },
-  //   },
-  // });
-
-  const boxSprinkles = createSprinkles(
-    boxPropertiesResponsive,
-    //   boxPropertiesVisual,
-  );
-
-  return { boxSprinkles };
+  return boxProperties;
 }
