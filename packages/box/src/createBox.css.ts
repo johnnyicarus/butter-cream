@@ -65,6 +65,7 @@ export function createBox<
     ...spacingScale.negative,
     ...spacingScale.half,
     ...spacingScale.halfNegative,
+    0: spacingScale.zeroValue,
   };
 
   const boxProperties = defineProperties({
