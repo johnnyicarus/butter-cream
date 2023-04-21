@@ -137,16 +137,16 @@ export function createBox<
         'paddingInlineStart',
         'paddingInlineStart',
       ],
-      paddingX: ['paddingInlineStart', 'paddingInlineEnd'],
-      paddingY: ['paddingBlockStart', 'paddingBlockEnd'],
+      paddingInline: ['paddingInlineStart', 'paddingInlineEnd'],
+      paddingBlock: ['paddingBlockStart', 'paddingBlockEnd'],
       margin: [
         'marginBlockStart',
         'marginBlockEnd',
         'marginInlineStart',
         'marginInlineStart',
       ],
-      marginX: ['marginInlineStart', 'marginInlineEnd'],
-      marginY: ['marginBlockStart', 'marginBlockEnd'],
+      marginInline: ['marginInlineStart', 'marginInlineEnd'],
+      marginBlock: ['marginBlockStart', 'marginBlockEnd'],
       overflow: ['overflowX', 'overflowY'],
       size: ['width', 'height'],
       inset: [
@@ -155,8 +155,8 @@ export function createBox<
         'insetInlineStart',
         'insetInlineEnd',
       ],
-      insetX: ['insetInlineStart', 'insetInlineEnd'],
-      insetY: ['insetBlockStart', 'insetBlockEnd'],
+      insetInline: ['insetInlineStart', 'insetInlineEnd'],
+      insetBlock: ['insetBlockStart', 'insetBlockEnd'],
     },
   });
 
