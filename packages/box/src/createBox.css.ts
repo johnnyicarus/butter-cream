@@ -45,7 +45,7 @@ export function createBox<
   defaultMediaQueryKey,
 }: CreateBoxParams<P, Q, R, S, T, U>) {
   const paddingValues = spacingScale.default;
-  const marginValues: Record<string, string> = {
+  const marginValues = {
     ...spacingScale.negative,
     ...spacingScale.halfNegative,
     auto: 'auto',
