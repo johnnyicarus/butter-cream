@@ -1,14 +1,20 @@
 import { isValidKey } from './isValidKey';
 
-interface ConditionsSignature<R extends string> {
+interface ConditionsFromMediaParams<R extends string> {
   mediaQueries: Record<R, string>;
   defaultMediaQueryKey: R;
+}
+
+interface ConditionsFromMediaReturnType<R extends string> {
+  conditions: Record<R, {} | { '@media': string }>;
+  defaultCondition: R;
+  responsiveArray: R[];
 }
 
 export function getConditionsFromMedia<R extends string>({
   mediaQueries,
   defaultMediaQueryKey,
-}: ConditionsSignature<R>) {
+}: ConditionsFromMediaParams<R>): ConditionsFromMediaReturnType<R> {
   const conditions = Object.entries<string>(mediaQueries).reduce<
     Record<R, {} | { '@media': string }>
   >((acc, [key, value]) => {
@@ -24,6 +30,6 @@ export function getConditionsFromMedia<R extends string>({
   return {
     conditions,
     defaultCondition: defaultMediaQueryKey,
-    responsiveArray: Object.keys(mediaQueries),
+    responsiveArray: Object.keys(mediaQueries) as R[],
   };
 }
