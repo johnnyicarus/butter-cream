@@ -5,45 +5,48 @@ import { defaultSizes } from './defaultSizes';
 import { getConditionsFromMedia } from '../../core/src/getConditionsFromMedia';
 
 interface BoxSpacingScale<
-  P extends string,
-  Q extends string,
-  R extends string,
-  S extends string,
+  T extends string | number,
+  P extends string | number,
+  Q extends string | number,
+  R extends string | number,
+  S extends string | number,
 > {
-  zeroValue: string | number;
-  default: Record<P, string>;
-  negative: Record<Q, string>;
-  half: Record<R, string>;
-  halfNegative: Record<S, string>;
+  zeroValue: { T: string | number };
+  default: Record<P, string | number>;
+  negative: Record<Q, string | number>;
+  half: Record<R, string | number>;
+  halfNegative: Record<S, string | number>;
 }
 
 interface CreateBoxParams<
-  P extends string,
-  Q extends string,
-  R extends string,
-  S extends string,
-  T extends string,
-  U extends string,
+  P extends string | number,
+  Q extends string | number,
+  R extends string | number,
+  S extends string | number,
+  T extends string | number,
+  U extends string | number,
+  V extends string | number,
 > {
-  spacingScale: BoxSpacingScale<P, Q, R, S>;
-  zIndexScale: Record<T, string>;
-  mediaQueries: Record<U, string>;
+  spacingScale: BoxSpacingScale<V, P, Q, R, S>;
+  zIndexScale: Record<T, string | number>;
+  mediaQueries: Record<U, string | number>;
   defaultMediaQueryKey: U;
 }
 
 export function createBox<
-  P extends string,
-  Q extends string,
-  R extends string,
-  S extends string,
-  T extends string,
-  U extends string,
+  P extends string | number,
+  Q extends string | number,
+  R extends string | number,
+  S extends string | number,
+  T extends string | number,
+  U extends string | number,
+  V extends string | number,
 >({
   spacingScale,
   zIndexScale,
   mediaQueries,
   defaultMediaQueryKey,
-}: CreateBoxParams<P, Q, R, S, T, U>) {
+}: CreateBoxParams<P, Q, R, S, T, U, V>) {
   const paddingValues = spacingScale.default;
   const marginValues = {
     ...spacingScale.negative,
@@ -52,11 +55,11 @@ export function createBox<
   };
   const sizeValues = {
     ...defaultSizes,
-    0: spacingScale.zeroValue,
+    ...spacingScale.zeroValue,
   };
   const sizeLimitValues = {
     ...defaultSizes,
-    0: spacingScale.zeroValue,
+    ...spacingScale.zeroValue,
     none: 'none',
   };
   const insetValues = {
@@ -65,7 +68,7 @@ export function createBox<
     ...spacingScale.negative,
     ...spacingScale.half,
     ...spacingScale.halfNegative,
-    0: spacingScale.zeroValue,
+    ...spacingScale.zeroValue,
   };
 
   const boxProperties = defineProperties({
