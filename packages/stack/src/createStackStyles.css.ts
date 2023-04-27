@@ -16,7 +16,7 @@ type GlobalStyleMap = Record<
   { selector: string; rule: GlobalStyleRule }
 >;
 
-export function createStack<M extends string>({
+export function createStackStyles<M extends string>({
   defaultMediaQueryKey,
   mediaQueries,
   splitPossibilities,

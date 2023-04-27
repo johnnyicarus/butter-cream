@@ -1,3 +1,3 @@
-import { createBox } from './createBox.css';
+import { createBoxStyles } from './createBoxStyles.css';
 
-export { createBox };
+export { createBoxStyles as createBox };

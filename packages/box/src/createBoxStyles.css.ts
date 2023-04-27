@@ -11,7 +11,7 @@ interface BoxSpacingScale<
   R extends string | number,
   S extends string | number,
 > {
-  zeroValue: { T: string | number };
+  zeroValue: Record<T, string | number>;
   default: Record<P, string | number>;
   negative: Record<Q, string | number>;
   half: Record<R, string | number>;
@@ -33,7 +33,7 @@ interface CreateBoxParams<
   defaultMediaQueryKey: U;
 }
 
-export function createBox<
+export function createBoxStyles<
   P extends string | number,
   Q extends string | number,
   R extends string | number,

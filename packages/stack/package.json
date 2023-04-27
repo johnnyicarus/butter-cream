@@ -1,6 +1,6 @@
 {
   "name": "@butter-cream/stack",
-  "version": "1.0.0-alpha.1",
+  "version": "1.0.0-alpha.4",
   "license": "MIT",
   "files": [
     "dist"
@@ -23,8 +23,12 @@
     "test": "jest"
   },
   "dependencies": {
+    "@muffin-tin/components": "1.0.0-alpha.3",
     "@vanilla-extract/css": "^1.11.0",
-    "@vanilla-extract/sprinkles": "^1.5.2"
+    "@vanilla-extract/dynamic": "^2.0.3",
+    "@vanilla-extract/sprinkles": "^1.5.2",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.21.4",

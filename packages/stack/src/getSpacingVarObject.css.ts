@@ -1,13 +1,13 @@
 import { CSSProperties } from '@vanilla-extract/css';
 import { isValidKey } from '../../core/src/isValidKey';
 
-type SpacingVarParams<P extends string> = {
+type SpacingVarParams<P extends string | number> = {
   defaultMediaQueryKey: string;
   mediaQueries: Record<P, string>;
   varMap: Record<P, string>;
 };
 
-export function getSpacingVarObject<P extends string>({
+export function getSpacingVarObject<P extends string | number>({
   defaultMediaQueryKey,
   mediaQueries,
   varMap,
