@@ -9,24 +9,24 @@ import { getSpacingVars } from './getSpacingVars';
 interface CreateStackComponentProps<
   SprinklesFn extends SprinklesFnBase,
   MediaQueryKeys extends string,
-  DefaultSpacingKeys extends string,
+  SpacingScaleKeys extends string,
   BaseComponentProps,
 > {
   BaseComponent: ForwardRefExoticComponent<BaseComponentProps>;
-  stackSpacingScale: Record<DefaultSpacingKeys, string>;
+  stackSpacingScale: Record<SpacingScaleKeys, string>;
   stackSplitMap: Record<number, string>;
   stackSprinkles: SprinklesFn;
   stackStyles: string;
   stackVarMap: Record<MediaQueryKeys, string>;
 }
 
-type StackProps<
+export type StackProps<
   SprinklesFn extends SprinklesFnBase,
   MediaQueryKeys extends string,
-  DefaultSpacingKeys extends string,
+  SpacingScaleKeys extends string,
   BaseComponentProps,
 > = {
-  space?: SpaceProp<MediaQueryKeys, DefaultSpacingKeys>;
+  space?: SpaceProp<MediaQueryKeys, SpacingScaleKeys>;
   splitAfter?: number;
   className?: string;
 } & SprinklesFn &
@@ -35,7 +35,7 @@ type StackProps<
 export function createStackComponent<
   SprinklesFn extends SprinklesFnBase,
   MediaQueryKeys extends string,
-  DefaultSpacingKeys extends string,
+  SpacingScaleKeys extends string,
   BaseComponentProps,
 >({
   BaseComponent,
@@ -47,7 +47,7 @@ export function createStackComponent<
 }: CreateStackComponentProps<
   SprinklesFn,
   MediaQueryKeys,
-  DefaultSpacingKeys,
+  SpacingScaleKeys,
   BaseComponentProps
 >) {
   const Stack = forwardRef(
@@ -59,7 +59,7 @@ export function createStackComponent<
       }: StackProps<
         SprinklesFn,
         MediaQueryKeys,
-        DefaultSpacingKeys,
+        SpacingScaleKeys,
         BaseComponentProps
       >,
       ref,
@@ -79,7 +79,7 @@ export function createStackComponent<
           } ${stackSprinkles(sprinkleProps)}`}
           style={{
             ...assignInlineVars(
-              getSpacingVars<MediaQueryKeys, DefaultSpacingKeys>({
+              getSpacingVars<MediaQueryKeys, SpacingScaleKeys>({
                 vars: stackVarMap,
                 prop: space,
                 spacingScale: stackSpacingScale,
