@@ -1,12 +1,12 @@
 import { SpaceProp } from './SpaceProp';
 
-interface GetSpacingVars<M extends string, S extends string> {
+interface GetSpacingVars<M extends string, S extends string | number> {
   vars: Record<M, string>;
   prop: SpaceProp<M, S>;
   spacingScale: Record<S, string>;
 }
 
-export function getSpacingVars<M extends string, S extends string>({
+export function getSpacingVars<M extends string, S extends string | number>({
   vars,
   prop,
   spacingScale,

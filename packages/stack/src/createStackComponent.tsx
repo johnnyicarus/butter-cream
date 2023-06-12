@@ -9,7 +9,7 @@ import { getSpacingVars } from './getSpacingVars';
 interface CreateStackComponentProps<
   SprinklesFn extends SprinklesFnBase,
   MediaQueryKeys extends string,
-  SpacingScaleKeys extends string,
+  SpacingScaleKeys extends string | number,
   BaseComponentProps,
 > {
   BaseComponent: ForwardRefExoticComponent<BaseComponentProps>;
@@ -23,7 +23,7 @@ interface CreateStackComponentProps<
 export type StackProps<
   SprinklesFn extends SprinklesFnBase,
   MediaQueryKeys extends string,
-  SpacingScaleKeys extends string,
+  SpacingScaleKeys extends string | number,
   BaseComponentProps,
 > = {
   space?: SpaceProp<MediaQueryKeys, SpacingScaleKeys>;
@@ -35,7 +35,7 @@ export type StackProps<
 export function createStackComponent<
   SprinklesFn extends SprinklesFnBase,
   MediaQueryKeys extends string,
-  SpacingScaleKeys extends string,
+  SpacingScaleKeys extends string | number,
   BaseComponentProps,
 >({
   BaseComponent,
