@@ -4,4 +4,4 @@ export const globals = [
   'initial',
   'revert',
   'unset',
-];
+] as const;
