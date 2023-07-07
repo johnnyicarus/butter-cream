@@ -11,7 +11,7 @@ interface CreateStackParams<M extends string> {
   splitPossibilities: number;
 }
 
-type GlobalStyleMap = Record<
+export type GlobalStyleMap = Record<
   string,
   { selector: string; rule: GlobalStyleRule }
 >;
