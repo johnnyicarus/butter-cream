@@ -2,9 +2,22 @@ import { forwardRef, ForwardRefExoticComponent } from 'react';
 import { assignInlineVars } from '@vanilla-extract/dynamic';
 import { extractAtomsFromProps } from '@muffin-tin/components';
 
+import { composeClassNames } from '../../core/src/composeClassNames';
 import { SprinklesFnBase } from '../../core/src/SprinklesFnBase';
 import { SpaceProp } from './SpaceProp';
 import { getSpacingVars } from './getSpacingVars';
+
+export type StackProps<
+  Sprinkles,
+  MediaQueryKeys extends string,
+  SpacingScaleKeys extends string | number,
+  BaseComponentProps,
+> = {
+  space?: SpaceProp<MediaQueryKeys, SpacingScaleKeys>;
+  splitAfter?: number;
+  className?: string;
+} & Sprinkles &
+  BaseComponentProps;
 
 interface CreateStackComponentProps<
   SprinklesFn extends SprinklesFnBase,
@@ -19,18 +32,6 @@ interface CreateStackComponentProps<
   stackStyles: string;
   stackVarMap: Record<MediaQueryKeys, string>;
 }
-
-export type StackProps<
-  SprinklesFn extends SprinklesFnBase,
-  MediaQueryKeys extends string,
-  SpacingScaleKeys extends string | number,
-  BaseComponentProps,
-> = {
-  space?: SpaceProp<MediaQueryKeys, SpacingScaleKeys>;
-  splitAfter?: number;
-  className?: string;
-} & SprinklesFn &
-  BaseComponentProps;
 
 export function createStackComponent<
   SprinklesFn extends SprinklesFnBase,
@@ -53,11 +54,12 @@ export function createStackComponent<
   const Stack = forwardRef(
     (
       {
+        className,
         space,
         splitAfter,
         ...rest
       }: StackProps<
-        SprinklesFn,
+        Parameters<typeof stackSprinkles>[0],
         MediaQueryKeys,
         SpacingScaleKeys,
         BaseComponentProps
@@ -65,7 +67,10 @@ export function createStackComponent<
       ref,
     ) => {
       type Sprinkles = Parameters<typeof stackSprinkles>[0];
-      type Rest = Omit<BaseComponentProps, 'space' | 'splitAfter'>;
+      type Rest = Omit<
+        BaseComponentProps,
+        'space' | 'splitAfter' | 'className'
+      >;
       const { sprinkleProps, otherProps } = extractAtomsFromProps<
         Rest,
         Sprinkles
@@ -74,9 +79,12 @@ export function createStackComponent<
       return (
         <BaseComponent
           ref={ref}
-          className={`${stackStyles} ${
-            splitAfter ? stackSplitMap[splitAfter] : undefined
-          } ${stackSprinkles(sprinkleProps)}`}
+          className={composeClassNames(
+            stackStyles,
+            splitAfter ? stackSplitMap[splitAfter] : undefined,
+            stackSprinkles(sprinkleProps),
+            className,
+          )}
           style={{
             ...assignInlineVars(
               getSpacingVars<MediaQueryKeys, SpacingScaleKeys>({
