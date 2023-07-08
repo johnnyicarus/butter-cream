@@ -5,48 +5,62 @@ import { defaultSizes } from './defaultSizes';
 import { getConditionsFromMedia } from '../../core/src/getConditionsFromMedia';
 
 interface BoxSpacingScale<
-  T extends string | number,
-  P extends string | number,
-  Q extends string | number,
-  R extends string | number,
-  S extends string | number,
+  ZeroValueKey extends string | number,
+  DefaultSpacingKeys extends string | number,
+  NegativeSpacingKeys extends string | number,
+  HalfSpacingKeys extends string | number,
+  HalfNegativeSpacingKeys extends string | number,
 > {
-  zeroValue: Record<T, string | number>;
-  default: Record<P, string | number>;
-  negative: Record<Q, string | number>;
-  half: Record<R, string | number>;
-  halfNegative: Record<S, string | number>;
+  zeroValue: Record<ZeroValueKey, string | number>;
+  default: Record<DefaultSpacingKeys, string | number>;
+  negative: Record<NegativeSpacingKeys, string | number>;
+  half: Record<HalfSpacingKeys, string | number>;
+  halfNegative: Record<HalfNegativeSpacingKeys, string | number>;
 }
 
 interface CreateBoxParams<
-  P extends string | number,
-  Q extends string | number,
-  R extends string | number,
-  S extends string | number,
-  T extends string | number,
-  U extends string | number,
-  V extends string | number,
+  DefaultSpacingKeys extends string | number,
+  NegativeSpacingKeys extends string | number,
+  HalfSpacingKeys extends string | number,
+  HalfNegativeSpacingKeys extends string | number,
+  ZIndexKeys extends string | number,
+  MediaQueryKeys extends string | number,
+  ZeroValueKey extends string | number,
 > {
-  spacingScale: BoxSpacingScale<V, P, Q, R, S>;
-  zIndexScale: Record<T, string | number>;
-  mediaQueries: Record<U, string | number>;
-  defaultMediaQueryKey: U;
+  spacingScale: BoxSpacingScale<
+    ZeroValueKey,
+    DefaultSpacingKeys,
+    NegativeSpacingKeys,
+    HalfSpacingKeys,
+    HalfNegativeSpacingKeys
+  >;
+  zIndexScale: Record<ZIndexKeys, string | number>;
+  mediaQueries: Record<MediaQueryKeys, string | number>;
+  defaultMediaQueryKey: MediaQueryKeys;
 }
 
 export function createBoxStyles<
-  P extends string | number,
-  Q extends string | number,
-  R extends string | number,
-  S extends string | number,
-  T extends string | number,
-  U extends string | number,
-  V extends string | number,
+  DefaultSpacingKeys extends string | number,
+  NegativeSpacingKeys extends string | number,
+  HalfSpacingKeys extends string | number,
+  HalfNegativeSpacingKeys extends string | number,
+  ZIndexKeys extends string | number,
+  MediaQueryKeys extends string | number,
+  ZeroValueKey extends string | number,
 >({
   spacingScale,
   zIndexScale,
   mediaQueries,
   defaultMediaQueryKey,
-}: CreateBoxParams<P, Q, R, S, T, U, V>) {
+}: CreateBoxParams<
+  DefaultSpacingKeys,
+  NegativeSpacingKeys,
+  HalfSpacingKeys,
+  HalfNegativeSpacingKeys,
+  ZIndexKeys,
+  MediaQueryKeys,
+  ZeroValueKey
+>) {
   const paddingValues = spacingScale.default;
   const marginValues = {
     ...spacingScale.negative,
@@ -72,7 +86,7 @@ export function createBoxStyles<
   };
 
   const boxProperties = defineProperties({
-    ...getConditionsFromMedia<U>({
+    ...getConditionsFromMedia<MediaQueryKeys>({
       mediaQueries,
       defaultMediaQueryKey,
     }),
