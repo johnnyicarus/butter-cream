@@ -1,4 +1,13 @@
-import { forwardRef, ForwardRefExoticComponent } from 'react';
+import {
+  ComponentPropsWithoutRef,
+  createElement,
+  ElementRef,
+  ElementType,
+  ForwardedRef,
+  forwardRef,
+  ForwardRefExoticComponent,
+  ReactElement,
+} from 'react';
 import { assignInlineVars } from '@vanilla-extract/dynamic';
 import { extractAtomsFromProps } from '@muffin-tin/components';
 
@@ -7,37 +16,66 @@ import { SprinklesFnBase } from '../../core/src/SprinklesFnBase';
 import { SpaceProp } from './SpaceProp';
 import { getSpacingVars } from './getSpacingVars';
 
-export type StackProps<
-  Sprinkles,
-  MediaQueryKeys extends string,
-  SpacingScaleKeys extends string | number,
-  BaseComponentProps,
-> = {
-  space?: SpaceProp<MediaQueryKeys, SpacingScaleKeys>;
-  splitAfter?: number;
-  className?: string;
-} & Sprinkles &
-  BaseComponentProps;
-
-interface CreateStackComponentProps<
-  SprinklesFn extends SprinklesFnBase,
-  MediaQueryKeys extends string,
-  SpacingScaleKeys extends string | number,
-  BaseComponentProps,
+interface CreateStackComponentParams<
+  TSprinklesFn extends SprinklesFnBase,
+  TElement extends
+    | ElementType<{
+        className?: string;
+      }>
+    | ForwardRefExoticComponent<{ className?: string }>,
+  TMediaQueryKeys extends string,
+  TSpacingScaleKeys extends string | number,
 > {
-  BaseComponent: ForwardRefExoticComponent<BaseComponentProps>;
-  stackSpacingScale: Record<SpacingScaleKeys, string>;
+  BaseComponent: TElement;
+  stackSpacingScale: Record<TSpacingScaleKeys, string>;
   stackSplitMap: Record<number, string>;
-  stackSprinkles: SprinklesFn;
+  stackSprinkles: TSprinklesFn;
   stackStyles: string;
-  stackVarMap: Record<MediaQueryKeys, string>;
+  stackVarMap: Record<TMediaQueryKeys, string>;
+  displayName?: string;
 }
 
+type StackFeatureProps<
+  TMediaQueryKeys extends string,
+  TSpacingScaleKeys extends string | number,
+> = {
+  space?: SpaceProp<TMediaQueryKeys, TSpacingScaleKeys>;
+  splitAfter?: number;
+  className?: string;
+};
+
+type StackPropsWithoutSprinkles<
+  TElement extends
+    | ElementType<{
+        className?: string;
+      }>
+    | ForwardRefExoticComponent<{ className?: string }>,
+  TMediaQueryKeys extends string,
+  TSpacingScaleKeys extends string | number,
+> = StackFeatureProps<TMediaQueryKeys, TSpacingScaleKeys> &
+  ComponentPropsWithoutRef<TElement>;
+
+export type StackProps<
+  TSprinklesFn extends SprinklesFnBase,
+  TElement extends
+    | ElementType<{
+        className?: string;
+      }>
+    | ForwardRefExoticComponent<{ className?: string }>,
+  TMediaQueryKeys extends string,
+  TSpacingScaleKeys extends string | number,
+> = StackPropsWithoutSprinkles<TElement, TMediaQueryKeys, TSpacingScaleKeys> &
+  Parameters<TSprinklesFn>[0];
+
 export function createStackComponent<
-  SprinklesFn extends SprinklesFnBase,
-  MediaQueryKeys extends string,
-  SpacingScaleKeys extends string | number,
-  BaseComponentProps,
+  TSprinklesFn extends SprinklesFnBase,
+  TMediaQueryKeys extends string,
+  TSpacingScaleKeys extends string | number,
+  TElement extends
+    | ElementType<{
+        className?: string;
+      }>
+    | ForwardRefExoticComponent<{ className?: string }>,
 >({
   BaseComponent,
   stackSpacingScale,
@@ -45,60 +83,54 @@ export function createStackComponent<
   stackSprinkles,
   stackStyles,
   stackVarMap,
-}: CreateStackComponentProps<
-  SprinklesFn,
-  MediaQueryKeys,
-  SpacingScaleKeys,
-  BaseComponentProps
+  displayName,
+}: CreateStackComponentParams<
+  TSprinklesFn,
+  TElement,
+  TMediaQueryKeys,
+  TSpacingScaleKeys
 >) {
-  const Stack = forwardRef(
-    (
-      {
-        className,
-        space,
-        splitAfter,
-        ...rest
-      }: StackProps<
-        Parameters<typeof stackSprinkles>[0],
-        MediaQueryKeys,
-        SpacingScaleKeys,
-        BaseComponentProps
-      >,
+  function Component(
+    props: StackProps<
+      TSprinklesFn,
+      TElement,
+      TMediaQueryKeys,
+      TSpacingScaleKeys
+    >,
+    ref: ForwardedRef<ElementRef<TElement>>,
+  ) {
+    const { sprinkleProps, otherProps } = extractAtomsFromProps<
+      StackPropsWithoutSprinkles<
+        TElement,
+        TMediaQueryKeys,
+        TSpacingScaleKeys
+      > & { className?: string },
+      Parameters<TSprinklesFn>[0]
+    >(props, [stackSprinkles]);
+    const { className, space, splitAfter, ...rest } = otherProps;
+
+    return createElement(BaseComponent, {
+      ...rest,
       ref,
-    ) => {
-      type Sprinkles = Parameters<typeof stackSprinkles>[0];
-      type Rest = Omit<
-        BaseComponentProps,
-        'space' | 'splitAfter' | 'className'
-      >;
-      const { sprinkleProps, otherProps } = extractAtomsFromProps<
-        Rest,
-        Sprinkles
-      >(rest, [stackSprinkles]);
+      className: composeClassNames(
+        stackStyles,
+        splitAfter ? stackSplitMap[splitAfter] : undefined,
+        stackSprinkles(sprinkleProps),
+        className,
+      ),
+      style: {
+        ...assignInlineVars(
+          getSpacingVars<TMediaQueryKeys, TSpacingScaleKeys>({
+            vars: stackVarMap,
+            prop: space,
+            spacingScale: stackSpacingScale,
+          }),
+        ),
+      },
+    });
+  }
 
-      return (
-        <BaseComponent
-          ref={ref}
-          className={composeClassNames(
-            stackStyles,
-            splitAfter ? stackSplitMap[splitAfter] : undefined,
-            stackSprinkles(sprinkleProps),
-            className,
-          )}
-          style={{
-            ...assignInlineVars(
-              getSpacingVars<MediaQueryKeys, SpacingScaleKeys>({
-                vars: stackVarMap,
-                prop: space,
-                spacingScale: stackSpacingScale,
-              }),
-            ),
-          }}
-          {...(otherProps as BaseComponentProps)}
-        />
-      );
-    },
-  );
+  Component.displayName = displayName || 'ButterCreamStackComponent';
 
-  return Stack;
+  return forwardRef(Component);
 }
