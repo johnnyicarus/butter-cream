@@ -26,6 +26,7 @@ interface CreateBoxParams<
   ZIndexKeys extends string | number,
   MediaQueryKeys extends string | number,
   ZeroValueKey extends string | number,
+  ContainerKeys extends string | number,
 > {
   spacingScale: BoxSpacingScale<
     ZeroValueKey,
@@ -37,6 +38,7 @@ interface CreateBoxParams<
   zIndexScale: Record<ZIndexKeys, string | number>;
   mediaQueries: Record<MediaQueryKeys, string | number>;
   defaultMediaQueryKey: MediaQueryKeys;
+  containerSizeScale: Record<ContainerKeys, string | number>;
 }
 
 export function createBoxStyles<
@@ -47,11 +49,13 @@ export function createBoxStyles<
   ZIndexKeys extends string | number,
   MediaQueryKeys extends string | number,
   ZeroValueKey extends string | number,
+  ContainerKeys extends string | number,
 >({
   spacingScale,
   zIndexScale,
   mediaQueries,
   defaultMediaQueryKey,
+  containerSizeScale,
 }: CreateBoxParams<
   DefaultSpacingKeys,
   NegativeSpacingKeys,
@@ -59,7 +63,8 @@ export function createBoxStyles<
   HalfNegativeSpacingKeys,
   ZIndexKeys,
   MediaQueryKeys,
-  ZeroValueKey
+  ZeroValueKey,
+  ContainerKeys
 >) {
   const paddingValues = spacingScale.default;
   const marginValues = {
@@ -140,7 +145,10 @@ export function createBoxStyles<
         screen: '100vh',
       },
       minWidth: sizeLimitValues,
-      maxWidth: sizeLimitValues,
+      maxWidth: {
+        ...sizeLimitValues,
+        ...containerSizeScale,
+      },
 
       insetBlockStart: insetValues,
       insetBlockEnd: insetValues,

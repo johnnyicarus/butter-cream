@@ -1,6 +1,6 @@
 {
   "name": "@butter-cream/box",
-  "version": "1.0.0-alpha.7",
+  "version": "1.0.0-alpha.8",
   "license": "MIT",
   "files": [
     "dist"
@@ -28,6 +28,6 @@
   "devDependencies": {
     "terser": "5.16.8",
     "tsup": "6.7.0",
-    "typescript": "5.0.3"
+    "typescript": "5.2.2"
   }
 }
