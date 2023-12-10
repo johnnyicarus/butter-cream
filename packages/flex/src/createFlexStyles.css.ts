@@ -57,6 +57,7 @@ export function createFlexStyles<
       ],
       justifyContent: [
         ...globals,
+        'normal',
         'flex-start',
         'center',
         'flex-end',
