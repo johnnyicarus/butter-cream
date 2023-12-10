@@ -1,6 +1,6 @@
 {
   "name": "@butter-cream/core",
-  "version": "1.0.0-alpha.5",
+  "version": "1.0.0-alpha.6",
   "license": "MIT",
   "files": [
     "dist"
@@ -21,13 +21,9 @@
     "build": "tsc && npm run bundle && cp dist/index.d.ts dist/index.d.cts",
     "bundle": "tsup src/index.ts --format esm,cjs --dts --minify terser --treeshake"
   },
-  "dependencies": {
-    "@vanilla-extract/css": "^1.11.0",
-    "@vanilla-extract/sprinkles": "^1.5.2"
-  },
   "devDependencies": {
     "terser": "5.16.8",
     "tsup": "6.7.0",
-    "typescript": "5.0.3"
+    "typescript": "5.2.2"
   }
 }
