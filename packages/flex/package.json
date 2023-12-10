@@ -19,15 +19,20 @@
   },
   "scripts": {
     "build": "tsc && npm run bundle && cp dist/index.d.ts dist/index.d.cts",
-    "bundle": "tsup src/index.ts --format esm,cjs --dts --minify terser --treeshake"
+    "bundle": "tsup src/index.ts --format esm,cjs --dts --minify terser --treeshake",
+    "lint:check": "eslint \"src/*.{ts,tsx}\"",
+    "lint:write": "eslint \"src/*.{ts,tsx}\" --fix",
+    "format:check": "prettier --check '*.(ts|tsx|json|js)' 'src/**/*.(ts|tsx|json|js)'",
+    "format:write": "prettier --write '*.(ts|tsx|json|js)' 'src/**/*.(ts|tsx|json|js)'"
   },
   "dependencies": {
-    "@vanilla-extract/css": "^1.11.0",
-    "@vanilla-extract/sprinkles": "^1.5.2"
+    "@butter-cream/core": "1.0.0-alpha.6",
+    "@vanilla-extract/css": "^1.14.0",
+    "@vanilla-extract/sprinkles": "^1.6.1"
   },
   "devDependencies": {
-    "terser": "5.16.8",
-    "tsup": "6.7.0",
-    "typescript": "5.0.3"
+    "terser": "5.26.0",
+    "tsup": "8.0.1",
+    "typescript": "5.3.3"
   }
 }

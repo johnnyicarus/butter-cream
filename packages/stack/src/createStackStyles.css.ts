@@ -1,4 +1,4 @@
-import { GlobalStyleRule, style } from '@vanilla-extract/css';
+import { type GlobalStyleRule, style } from '@vanilla-extract/css';
 import { getVarMap } from './getVarMap.css';
 import { getSpacingVarObject } from './getSpacingVarObject.css';
 import { defineProperties } from '@vanilla-extract/sprinkles';

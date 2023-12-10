@@ -1,7 +1,6 @@
 import { defineProperties } from '@vanilla-extract/sprinkles';
 
-import { globals } from '../../core/src/globals';
-import { getConditionsFromMedia } from '../../core/src/getConditionsFromMedia';
+import { getConditionsFromMedia, globals } from '@butter-cream/core';
 import { style } from '@vanilla-extract/css';
 
 interface FlexSpacingScale<

@@ -1,4 +1,4 @@
-import { SpaceProp } from './SpaceProp';
+import type { SpaceProp } from './SpaceProp';
 
 interface GetSpacingVars<M extends string, S extends string | number> {
   vars: Record<M, string>;

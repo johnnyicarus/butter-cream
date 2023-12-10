@@ -1,4 +1,4 @@
-import { CSSProperties } from '@vanilla-extract/css';
+import type { CSSProperties } from '@vanilla-extract/css';
 import { isValidKey } from '../../core/src/isValidKey';
 
 type SpacingVarParams<P extends string | number> = {

@@ -1,8 +1,7 @@
 import { defineProperties } from '@vanilla-extract/sprinkles';
 
-import { globals } from '../../core/src/globals';
+import { getConditionsFromMedia, globals } from '@butter-cream/core';
 import { defaultSizes } from './defaultSizes';
-import { getConditionsFromMedia } from '../../core/src/getConditionsFromMedia';
 
 interface BoxSpacingScale<
   ZeroValueKey extends string | number,

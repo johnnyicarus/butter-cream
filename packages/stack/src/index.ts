@@ -1,7 +1,7 @@
 import { createStackStyles } from './createStackStyles.css';
-import { StackProps, createStackComponent } from './createStackComponent';
+import { type WithStackProps, withStack } from './withStack';
 import { getSpacingVars } from './getSpacingVars';
-import { SpaceProp } from './SpaceProp';
+import type { SpaceProp } from './SpaceProp';
 
-export { createStackStyles, createStackComponent, getSpacingVars };
-export type { SpaceProp, StackProps };
+export { createStackStyles, withStack, getSpacingVars };
+export type { SpaceProp, WithStackProps };
