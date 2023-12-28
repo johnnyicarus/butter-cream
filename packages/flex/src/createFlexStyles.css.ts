@@ -4,32 +4,32 @@ import { getConditionsFromMedia, globals } from '@butter-cream/core';
 import { style } from '@vanilla-extract/css';
 
 interface FlexSpacingScale<
-  ZeroValueKey extends string | number,
-  DefaultSpacingKeys extends string | number,
+  TZeroValueKey extends string | number,
+  TDefaultSpacingKey extends string | number
 > {
-  zeroValue: Record<ZeroValueKey, string | number>;
-  default: Record<DefaultSpacingKeys, string | number>;
+  zeroValue: Record<TZeroValueKey, string | number>;
+  default: Record<TDefaultSpacingKey, string | number>;
 }
 
 interface CreateFlexParams<
-  ZeroValueKey extends string | number,
-  DefaultSpacingKeys extends string | number,
-  MediaQueryKeys extends string | number,
+  TMediaQueryKey extends string,
+  TZeroValueKey extends string | number,
+  TDefaultSpacingKey extends string | number
 > {
-  spacingScale: FlexSpacingScale<ZeroValueKey, DefaultSpacingKeys>;
-  mediaQueries: Record<MediaQueryKeys, string | number>;
-  defaultMediaQueryKey: MediaQueryKeys;
+  mediaQueries: Record<TMediaQueryKey, string | number>;
+  defaultMediaQueryKey: TMediaQueryKey;
+  spacingScale: FlexSpacingScale<TZeroValueKey, TDefaultSpacingKey>;
 }
 
 export function createFlexStyles<
-  ZeroValueKey extends string | number,
-  DefaultSpacingKeys extends string | number,
-  MediaQueryKeys extends string | number,
+  TMediaQueryKey extends string,
+  TZeroValueKey extends string | number,
+  TDefaultSpacingKey extends string | number
 >({
-  spacingScale,
-  mediaQueries,
   defaultMediaQueryKey,
-}: CreateFlexParams<ZeroValueKey, DefaultSpacingKeys, MediaQueryKeys>) {
+  mediaQueries,
+  spacingScale,
+}: CreateFlexParams<TMediaQueryKey, TZeroValueKey, TDefaultSpacingKey>) {
   const flexBaseStyles = style({
     display: 'flex',
   });
@@ -40,7 +40,7 @@ export function createFlexStyles<
   };
 
   const flexProperties = defineProperties({
-    ...getConditionsFromMedia<MediaQueryKeys>({
+    ...getConditionsFromMedia<TMediaQueryKey>({
       mediaQueries,
       defaultMediaQueryKey,
     }),

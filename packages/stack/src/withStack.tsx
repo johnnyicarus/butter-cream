@@ -2,97 +2,92 @@ import type { ReactNode } from 'react';
 import { assignInlineVars } from '@vanilla-extract/dynamic';
 import { extractAtomsFromProps, type SprinklesFnBase } from '@muffin-tin/core';
 
-import { composeClassNames } from '../../core/src/composeClassNames';
+import { composeClassNames } from '@muffin-tin/core';
 import type { SpaceProp } from './SpaceProp';
 import { getSpacingVars } from './getSpacingVars';
 
 interface CreateStackComponentParams<
   TProps,
   TSprinklesFn extends SprinklesFnBase,
-  TMediaQueryKeys extends string,
-  TSpacingScaleKeys extends string | number,
+  TMediaQueryKey extends string,
+  TSpacingScaleKey extends string | number
 > {
   Component: (props: TProps) => ReactNode;
-  stackSpacingScale: Record<TSpacingScaleKeys, string>;
+  stackSpacingScale: Record<TSpacingScaleKey, string>;
   stackSplitMap: Record<number, string>;
   stackSprinkles: TSprinklesFn;
-  stackStyles: string;
-  stackVarMap: Record<TMediaQueryKeys, string>;
+  stackBaseStyles: string;
+  stackVarMap: Record<TMediaQueryKey, string>;
   hasClassNameProp?: boolean;
   displayName?: string;
 }
 
-type StackFeatureProps<
-  TMediaQueryKeys extends string,
-  TSpacingScaleKeys extends string | number,
-> = {
-  space?: SpaceProp<TMediaQueryKeys, TSpacingScaleKeys>;
+interface StackFeatureProps<
+  TMediaQueryKey extends string,
+  TSpacingScaleKey extends string | number
+> {
+  space?: SpaceProp<TMediaQueryKey, TSpacingScaleKey>;
   splitAfter?: number;
   className?: string;
-};
+}
 
 type StackPropsWithoutSprinkles<
   TProps,
   TSprinklesFn extends SprinklesFnBase,
-  TMediaQueryKeys extends string,
-  TSpacingScaleKeys extends string | number,
-> = StackFeatureProps<TMediaQueryKeys, TSpacingScaleKeys> &
+  TMediaQueryKey extends string,
+  TSpacingScaleKey extends string | number
+> = StackFeatureProps<TMediaQueryKey, TSpacingScaleKey> &
   Omit<TProps, Parameters<TSprinklesFn>[0]>;
 
 export type WithStackProps<
   TProps,
   TSprinklesFn extends SprinklesFnBase,
-  TMediaQueryKeys extends string,
-  TSpacingScaleKeys extends string | number,
+  TMediaQueryKey extends string,
+  TSpacingScaleKey extends string | number
 > = StackPropsWithoutSprinkles<
   TProps,
   TSprinklesFn,
-  TMediaQueryKeys,
-  TSpacingScaleKeys
+  TMediaQueryKey,
+  TSpacingScaleKey
 > &
   Parameters<TSprinklesFn>[0];
 
 export const withStack = <
   TProps,
   TSprinklesFn extends SprinklesFnBase,
-  TMediaQueryKeys extends string,
-  TSpacingScaleKeys extends string | number,
+  TMediaQueryKey extends string,
+  TSpacingScaleKey extends string | number
 >({
   Component,
   stackSpacingScale,
   stackSplitMap,
   stackSprinkles,
-  stackStyles,
+  stackBaseStyles,
   stackVarMap,
   hasClassNameProp,
   displayName,
 }: CreateStackComponentParams<
   TProps,
   TSprinklesFn,
-  TMediaQueryKeys,
-  TSpacingScaleKeys
+  TMediaQueryKey,
+  TSpacingScaleKey
 >): ((
-  props: WithStackProps<
-    TProps,
-    TSprinklesFn,
-    TMediaQueryKeys,
-    TSpacingScaleKeys
-  >,
+  props: WithStackProps<TProps, TSprinklesFn, TMediaQueryKey, TSpacingScaleKey>
 ) => ReactNode) => {
   const WithStackComponent = (
     props: WithStackProps<
       TProps,
       TSprinklesFn,
-      TMediaQueryKeys,
-      TSpacingScaleKeys
-    >,
+      TMediaQueryKey,
+      TSpacingScaleKey
+    >
   ) => {
     const { sprinkleProps, otherProps } = extractAtomsFromProps<
       StackPropsWithoutSprinkles<
         TProps,
         TSprinklesFn,
-        TMediaQueryKeys,
-        TSpacingScaleKeys
+        TMediaQueryKey,
+        TSpacingScaleKey
       >,
       Parameters<TSprinklesFn>[0]
     >(props, [stackSprinkles]);
@@ -102,18 +97,18 @@ export const withStack = <
       <Component
         {...(rest as TProps)}
         className={composeClassNames(
-          stackStyles,
+          stackBaseStyles,
           splitAfter ? stackSplitMap[splitAfter] : undefined,
           stackSprinkles(sprinkleProps),
-          hasClassNameProp ? (otherProps as any).className : undefined,
+          hasClassNameProp ? (otherProps as any).className : undefined
         )}
         style={{
           ...assignInlineVars(
-            getSpacingVars<TMediaQueryKeys, TSpacingScaleKeys>({
+            getSpacingVars<TMediaQueryKey, TSpacingScaleKey>({
               vars: stackVarMap,
               prop: space,
               spacingScale: stackSpacingScale,
-            }),
+            })
           ),
         }}
       />

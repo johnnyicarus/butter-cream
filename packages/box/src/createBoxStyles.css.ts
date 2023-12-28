@@ -4,51 +4,51 @@ import { getConditionsFromMedia, globals } from '@butter-cream/core';
 import { defaultSizes } from './defaultSizes';
 
 interface BoxSpacingScale<
-  ZeroValueKey extends string | number,
-  DefaultSpacingKeys extends string | number,
-  NegativeSpacingKeys extends string | number,
-  HalfSpacingKeys extends string | number,
-  HalfNegativeSpacingKeys extends string | number,
+  TZeroValueKey extends string | number,
+  TDefaultSpacingKey extends string | number,
+  TNegativeSpacingKey extends string | number,
+  THalfSpacingKey extends string | number,
+  THalfNegativeSpacingKey extends string | number
 > {
-  zeroValue: Record<ZeroValueKey, string | number>;
-  default: Record<DefaultSpacingKeys, string | number>;
-  negative: Record<NegativeSpacingKeys, string | number>;
-  half: Record<HalfSpacingKeys, string | number>;
-  halfNegative: Record<HalfNegativeSpacingKeys, string | number>;
+  zeroValue: Record<TZeroValueKey, string | number>;
+  default: Record<TDefaultSpacingKey, string | number>;
+  negative?: Record<TNegativeSpacingKey, string | number>;
+  half?: Record<THalfSpacingKey, string | number>;
+  halfNegative?: Record<THalfNegativeSpacingKey, string | number>;
 }
 
 interface CreateBoxParams<
-  DefaultSpacingKeys extends string | number,
-  NegativeSpacingKeys extends string | number,
-  HalfSpacingKeys extends string | number,
-  HalfNegativeSpacingKeys extends string | number,
-  ZIndexKeys extends string | number,
-  MediaQueryKeys extends string | number,
-  ZeroValueKey extends string | number,
-  ContainerKeys extends string | number,
+  TMediaQueryKey extends string | number,
+  TZeroValueKey extends string | number,
+  TDefaultSpacingKey extends string | number,
+  TNegativeSpacingKey extends string | number,
+  THalfSpacingKey extends string | number,
+  THalfNegativeSpacingKey extends string | number,
+  TZIndexKey extends string | number,
+  TContainerKey extends string | number
 > {
   spacingScale: BoxSpacingScale<
-    ZeroValueKey,
-    DefaultSpacingKeys,
-    NegativeSpacingKeys,
-    HalfSpacingKeys,
-    HalfNegativeSpacingKeys
+    TZeroValueKey,
+    TDefaultSpacingKey,
+    TNegativeSpacingKey,
+    THalfSpacingKey,
+    THalfNegativeSpacingKey
   >;
-  zIndexScale: Record<ZIndexKeys, string | number>;
-  mediaQueries: Record<MediaQueryKeys, string | number>;
-  defaultMediaQueryKey: MediaQueryKeys;
-  containerSizeScale: Record<ContainerKeys, string | number>;
+  zIndexScale: Record<TZIndexKey, string | number>;
+  mediaQueries: Record<TMediaQueryKey, string | number>;
+  defaultMediaQueryKey: TMediaQueryKey;
+  containerSizeScale: Record<TContainerKey, string | number>;
 }
 
 export function createBoxStyles<
-  DefaultSpacingKeys extends string | number,
-  NegativeSpacingKeys extends string | number,
-  HalfSpacingKeys extends string | number,
-  HalfNegativeSpacingKeys extends string | number,
-  ZIndexKeys extends string | number,
-  MediaQueryKeys extends string | number,
-  ZeroValueKey extends string | number,
-  ContainerKeys extends string | number,
+  TMediaQueryKey extends string | number,
+  TZeroValueKey extends string | number,
+  TDefaultSpacingKey extends string | number,
+  TNegativeSpacingKey extends string | number,
+  THalfSpacingKey extends string | number,
+  THalfNegativeSpacingKey extends string | number,
+  TZIndexKey extends string | number,
+  TContainerKey extends string | number
 >({
   spacingScale,
   zIndexScale,
@@ -56,14 +56,14 @@ export function createBoxStyles<
   defaultMediaQueryKey,
   containerSizeScale,
 }: CreateBoxParams<
-  DefaultSpacingKeys,
-  NegativeSpacingKeys,
-  HalfSpacingKeys,
-  HalfNegativeSpacingKeys,
-  ZIndexKeys,
-  MediaQueryKeys,
-  ZeroValueKey,
-  ContainerKeys
+  TMediaQueryKey,
+  TZeroValueKey,
+  TDefaultSpacingKey,
+  TNegativeSpacingKey,
+  THalfSpacingKey,
+  THalfNegativeSpacingKey,
+  TZIndexKey,
+  TContainerKey
 >) {
   const paddingValues = spacingScale.default;
   const marginValues = {
@@ -90,7 +90,7 @@ export function createBoxStyles<
   };
 
   const boxProperties = defineProperties({
-    ...getConditionsFromMedia<MediaQueryKeys>({
+    ...getConditionsFromMedia<TMediaQueryKey>({
       mediaQueries,
       defaultMediaQueryKey,
     }),
