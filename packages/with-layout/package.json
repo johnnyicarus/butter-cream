@@ -1,0 +1,55 @@
+{
+  "name": "@butter-cream/with-layout",
+  "version": "1.0.0-alpha.3",
+  "license": "MIT",
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsc && npm run bundle && cp dist/index.d.ts dist/index.d.cts",
+    "bundle": "tsup src/index.ts --format esm,cjs --dts --minify terser --treeshake",
+    "lint:check": "eslint \"src/*.{ts,tsx}\"",
+    "lint:write": "eslint \"src/*.{ts,tsx}\" --fix",
+    "format:check": "prettier --check '*.(ts|tsx|json|js)' 'src/**/*.(ts|tsx|json|js)'",
+    "format:write": "prettier --write '*.(ts|tsx|json|js)' 'src/**/*.(ts|tsx|json|js)'"
+  },
+  "dependencies": {
+    "@butter-cream/stack": "1.0.0-alpha.12",
+    "@muffin-tin/core": "1.0.0-alpha.4",
+    "@vanilla-extract/css": "^1.14.0",
+    "@vanilla-extract/dynamic": "^2.1.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "peerDependencies": {
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "@types/react": "^18",
+    "@types/react-dom": "^18"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.13.2",
+    "eslint": "^8.55.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-config-standard-with-typescript": "^42.0.0",
+    "eslint-plugin-import": "^2.29.0",
+    "eslint-plugin-n": "^16.3.1",
+    "eslint-plugin-promise": "^6.1.1",
+    "eslint-plugin-react": "^7.33.2",
+    "terser": "5.26.0",
+    "tsup": "8.0.1",
+    "typescript": "5.3.3"
+  }
+}

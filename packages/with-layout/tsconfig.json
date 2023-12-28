@@ -1,0 +1,41 @@
+{
+  "compilerOptions": {
+    /* Code runs in the DOM */
+    "lib": [
+      "DOM",
+      "DOM.Iterable",
+      "ESNext"
+    ],
+    "jsx": "react-jsx",
+    /* Base Options */
+    "esModuleInterop": false,
+    "skipLibCheck": true,
+    "target": "ESNext",
+    "verbatimModuleSyntax": true,
+    "allowJs": false,
+    "resolveJsonModule": true,
+    "moduleDetection": "force",
+    "noImplicitAny": true,
+    "useDefineForClassFields": true,
+    "forceConsistentCasingInFileNames": true,
+    /* Strictness */
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    /* Transpiling with TypeScript */
+    "moduleResolution": "Bundler",
+    "module": "ESNext",
+    "noEmit": true,
+    /* Config for a library in a monorepo */
+    "declaration": true,
+    "sourceMap": true,
+    "declarationMap": true
+    /*
+     * "composite": true fails but we don't
+     * have performance issues yet
+     */
+  },
+  "include": [
+    "src",
+    "../core/src/extractAtomsFromProps.ts"
+  ]
+}
