@@ -1,17 +1,20 @@
-export type ResponsivePropString<S extends string | number> =
-  | S
+export type ResponsivePropString<TSpacingScaleKey extends string | number> =
+  | TSpacingScaleKey
   | null
   | undefined;
 
-export type ResponsivePropArray<S extends string | number> =
-  ResponsivePropString<S>[];
+export type ResponsivePropArray<TSpacingScaleKey extends string | number> =
+  ResponsivePropString<TSpacingScaleKey>[];
 
 export type ResponsivePropObject<
-  M extends string | number,
-  S extends string | number,
-> = Partial<Record<M, S>>;
+  TMediaQueryKey extends string,
+  TSpacingScaleKey extends string | number
+> = Partial<Record<TMediaQueryKey, TSpacingScaleKey>>;
 
-export type SpaceProp<M extends string | number, S extends string | number> =
-  | ResponsivePropString<S>
-  | ResponsivePropArray<S>
-  | ResponsivePropObject<M, S>;
+export type SpaceProp<
+  TMediaQueryKey extends string,
+  TSpacingScaleKey extends string | number
+> =
+  | ResponsivePropString<TSpacingScaleKey>
+  | ResponsivePropArray<TSpacingScaleKey>
+  | ResponsivePropObject<TMediaQueryKey, TSpacingScaleKey>;

@@ -1,20 +1,27 @@
+/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import type { SpaceProp } from './SpaceProp';
 
-interface GetSpacingVars<M extends string, S extends string | number> {
-  vars: Record<M, string>;
-  prop: SpaceProp<M, S>;
-  spacingScale: Record<S, string>;
+interface GetSpacingVars<
+  TMediaQueryKey extends string,
+  TSpacingScaleKey extends string | number
+> {
+  vars: Record<TMediaQueryKey, string>;
+  prop: SpaceProp<TMediaQueryKey, TSpacingScaleKey>;
+  spacingScale: Record<TSpacingScaleKey, string>;
 }
 
-export function getSpacingVars<M extends string, S extends string | number>({
+export function getSpacingVars<
+  TMediaQueryKey extends string,
+  TSpacingScaleKey extends string | number
+>({
   vars,
   prop,
   spacingScale,
-}: GetSpacingVars<M, S>): Record<string, string> {
+}: GetSpacingVars<TMediaQueryKey, TSpacingScaleKey>): Record<string, string> {
   if (!prop) {
     return {};
   }
-  if (typeof prop === 'string') {
+  if (typeof prop === 'string' || typeof prop === 'number') {
     return Object.values(vars)
       .filter((v) => v)
       .reduce<Record<string, string>>((acc, current) => {
@@ -27,7 +34,7 @@ export function getSpacingVars<M extends string, S extends string | number>({
       ...prop,
       ...Array.from(
         { length: Object.keys(vars).length - prop.length },
-        () => null,
+        () => null
       ),
     ]
       .map((p, index) => {
@@ -55,9 +62,9 @@ export function getSpacingVars<M extends string, S extends string | number>({
     (acc, curr, index) => {
       if ((prop as Record<string, string>)[curr]) {
         const scaleKey = (prop as Record<string, string>)[curr];
-        acc[vars[curr as M]] = (spacingScale as Record<string, string>)[
-          scaleKey
-        ];
+        acc[vars[curr as TMediaQueryKey]] =
+          // @ts-expect-error pls
+          (spacingScale as Record<string, string>)[scaleKey];
       } else {
         const replaceKey = propArray
           .slice(0, index)
@@ -66,13 +73,13 @@ export function getSpacingVars<M extends string, S extends string | number>({
         propArray.reverse();
         if (replaceKey) {
           const scaleKey = (prop as Record<string, string>)[replaceKey];
-          acc[vars[curr as M]] = (spacingScale as Record<string, string>)[
-            scaleKey
-          ];
+          acc[vars[curr as TMediaQueryKey]] =
+            // @ts-expect-error pls
+            (spacingScale as Record<string, string>)[scaleKey];
         }
       }
       return acc;
     },
-    {},
+    {}
   );
 }

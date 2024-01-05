@@ -28,14 +28,14 @@ export function createStackStyles<M extends string>({
 
   const stackSplitMap = Array.from(
     { length: splitPossibilities },
-    (_, i) => i + 1,
+    (_, i) => i + 1
   ).reduce<Record<number, string>>((accumulator, current) => {
     accumulator[current] = style({});
     return accumulator;
   }, {});
 
   const stackGlobalStyleMap = Object.values(
-    stackSplitMap,
+    stackSplitMap
   ).reduce<GlobalStyleMap>((accumulator, style, index) => {
     const selector = `${style} > :nth-child(${index + 2})`;
     const rule = {
@@ -46,11 +46,11 @@ export function createStackStyles<M extends string>({
       rule,
     };
     return accumulator;
-  }, {} as GlobalStyleMap);
+  }, {});
 
   const stackVarMap = getVarMap(mediaQueries);
 
-  stackGlobalStyleMap['sleepyOwl'] = {
+  stackGlobalStyleMap.sleepyOwl = {
     selector: `${stackStyles} > * + *`,
     rule: {
       marginBlockStart: stackVarMap[defaultMediaQueryKey],
@@ -65,7 +65,7 @@ export function createStackStyles<M extends string>({
     },
   };
 
-  stackGlobalStyleMap['onlyChildHelper'] = {
+  stackGlobalStyleMap.onlyChildHelper = {
     selector: `${stackStyles}:only-child`,
     rule: {
       blockSize: '100%',

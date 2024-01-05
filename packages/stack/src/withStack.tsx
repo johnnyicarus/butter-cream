@@ -100,6 +100,7 @@ export const withStack = <
           stackBaseStyles,
           splitAfter ? stackSplitMap[splitAfter] : undefined,
           stackSprinkles(sprinkleProps),
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
           hasClassNameProp ? (otherProps as any).className : undefined
         )}
         style={{
