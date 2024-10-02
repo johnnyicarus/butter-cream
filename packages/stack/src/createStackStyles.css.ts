@@ -2,13 +2,11 @@ import { type GlobalStyleRule, style } from '@vanilla-extract/css';
 import { getVarMap } from './getVarMap.css';
 import { getSpacingVarObject } from './getSpacingVarObject.css';
 import { defineProperties } from '@vanilla-extract/sprinkles';
-import { getConditionsFromMedia } from '../../core/src/getConditionsFromMedia';
-import { globals } from '../../core/src/globals';
+import { getConditionsFromMedia, globals } from '@butter-cream/core';
 
 interface CreateStackParams<M extends string> {
   mediaQueries: Record<M, string>;
   defaultMediaQueryKey: M;
-  splitPossibilities: number;
 }
 
 export type GlobalStyleMap = Record<
@@ -19,56 +17,31 @@ export type GlobalStyleMap = Record<
 export function createStackStyles<M extends string>({
   defaultMediaQueryKey,
   mediaQueries,
-  splitPossibilities,
 }: CreateStackParams<M>) {
-  const stackStyles = style({
-    display: 'flex',
-    flexDirection: 'column',
-  });
-
-  const stackSplitMap = Array.from(
-    { length: splitPossibilities },
-    (_, i) => i + 1
-  ).reduce<Record<number, string>>((accumulator, current) => {
-    accumulator[current] = style({});
-    return accumulator;
-  }, {});
-
-  const stackGlobalStyleMap = Object.values(
-    stackSplitMap
-  ).reduce<GlobalStyleMap>((accumulator, style, index) => {
-    const selector = `${style} > :nth-child(${index + 2})`;
-    const rule = {
-      marginBlockStart: 'auto',
-    };
-    accumulator[style] = {
-      selector,
-      rule,
-    };
-    return accumulator;
-  }, {});
+  const stackBaseStyles = style({});
 
   const stackVarMap = getVarMap(mediaQueries);
 
-  stackGlobalStyleMap.sleepyOwl = {
-    selector: `${stackStyles} > * + *`,
-    rule: {
-      marginBlockStart: stackVarMap[defaultMediaQueryKey],
+  const stackGlobalStyleMap: GlobalStyleMap = {
+    sleepyOwl: {
+      selector: `${stackBaseStyles} > * + *`,
+      rule: {
+        marginBlockStart: stackVarMap[defaultMediaQueryKey],
 
-      '@media': {
-        ...getSpacingVarObject<M>({
-          mediaQueries,
-          defaultMediaQueryKey,
-          varMap: stackVarMap,
-        }),
+        '@media': {
+          ...getSpacingVarObject<M>({
+            mediaQueries,
+            defaultMediaQueryKey,
+            varMap: stackVarMap,
+          }),
+        },
       },
     },
-  };
-
-  stackGlobalStyleMap.onlyChildHelper = {
-    selector: `${stackStyles}:only-child`,
-    rule: {
-      blockSize: '100%',
+    onlyChildHelper: {
+      selector: `${stackBaseStyles}:only-child`,
+      rule: {
+        blockSize: '100%',
+      },
     },
   };
 
@@ -91,10 +64,9 @@ export function createStackStyles<M extends string>({
   });
 
   return {
-    stackStyles,
+    stackBaseStyles,
     stackGlobalStyleMap,
     stackVarMap,
-    stackSplitMap,
     stackProperties,
   };
 }

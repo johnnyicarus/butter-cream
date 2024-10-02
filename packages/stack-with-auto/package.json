@@ -1,6 +1,6 @@
 {
-  "name": "@butter-cream/stack",
-  "version": "1.0.0-alpha.15",
+  "name": "@butter-cream/stack-with-auto",
+  "version": "1.0.0-alpha.1",
   "license": "MIT",
   "files": [
     "dist"

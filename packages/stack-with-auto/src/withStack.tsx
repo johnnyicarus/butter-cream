@@ -14,6 +14,7 @@ interface CreateStackComponentParams<
 > {
   Component: (props: TProps) => ReactNode;
   stackSpacingScale: Record<TSpacingScaleKey, string>;
+  stackSplitMap: Record<number, string>;
   stackSprinkles: TSprinklesFn;
   stackBaseStyles: string;
   stackVarMap: Record<TMediaQueryKey, string>;
@@ -26,6 +27,7 @@ interface StackFeatureProps<
   TSpacingScaleKey extends string | number
 > {
   space?: SpaceProp<TMediaQueryKey, TSpacingScaleKey>;
+  splitAfter?: number;
   className?: string;
 }
 
@@ -57,9 +59,10 @@ export const withStack = <
   TSpacingScaleKey extends string | number
 >({
   Component,
-  stackBaseStyles,
   stackSpacingScale,
+  stackSplitMap,
   stackSprinkles,
+  stackBaseStyles,
   stackVarMap,
   hasClassNameProp,
   displayName,
@@ -88,13 +91,14 @@ export const withStack = <
       >,
       Parameters<TSprinklesFn>[0]
     >(props, [stackSprinkles]);
-    const { space, ...rest } = otherProps;
+    const { space, splitAfter, ...rest } = otherProps;
 
     return (
       <Component
         {...(rest as TProps)}
         className={composeClassNames(
           stackBaseStyles,
+          splitAfter ? stackSplitMap[splitAfter] : undefined,
           stackSprinkles(sprinkleProps),
           // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
           hasClassNameProp ? (otherProps as any).className : undefined
