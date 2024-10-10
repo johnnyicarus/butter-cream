@@ -17,7 +17,7 @@ export function defineBoxPaddingProperties<
   spacingScale,
   mediaQueries,
 }: DefineBoxPaddingParams<TSpacingKey, TMediaQueryKey>) {
-  const boxBaseProperties = defineProperties({
+  const boxPaddingProperties = defineProperties({
     ...getConditionsFromMedia<TMediaQueryKey>({
       mediaQueries: mediaQueries.orderedRecord,
       defaultMediaQueryKey: mediaQueries.defaultKey,
@@ -40,5 +40,5 @@ export function defineBoxPaddingProperties<
     },
   });
 
-  return { boxBaseProperties };
+  return { boxPaddingProperties };
 }
