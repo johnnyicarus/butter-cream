@@ -1,3 +1,4 @@
-import { createSwitcherStyles } from './createSwitcherStyles.css';
+import { defineSwitcherStyles } from './defineSwitcherStyles.css';
+import { withSwitcher } from './withSwitcher';
 
-export { createSwitcherStyles };
+export { defineSwitcherStyles, withSwitcher };

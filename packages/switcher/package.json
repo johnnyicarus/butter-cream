@@ -22,7 +22,7 @@
     "bundle": "tsup src/index.ts --format esm,cjs --dts --minify terser --treeshake"
   },
   "dependencies": {
-    "@muffin-tin/core": "1.0.0-alpha.3",
+    "@muffin-tin/core": "1.0.0-alpha.4",
     "@vanilla-extract/css": "^1.11.0",
     "@vanilla-extract/sprinkles": "^1.5.2",
     "react": "18.2.0",
