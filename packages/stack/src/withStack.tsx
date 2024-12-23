@@ -6,7 +6,7 @@ import { composeClassNames } from '@muffin-tin/core';
 import type { SpaceProp } from './SpaceProp';
 import { getSpacingVars } from './getSpacingVars';
 
-interface CreateStackComponentParams<
+interface WithStackParams<
   TProps,
   TSprinklesFn extends SprinklesFnBase,
   TMediaQueryKey extends string,
@@ -63,12 +63,7 @@ export const withStack = <
   stackVarMap,
   hasClassNameProp,
   displayName,
-}: CreateStackComponentParams<
-  TProps,
-  TSprinklesFn,
-  TMediaQueryKey,
-  TSpacingScaleKey
->): ((
+}: WithStackParams<TProps, TSprinklesFn, TMediaQueryKey, TSpacingScaleKey>): ((
   props: WithStackProps<TProps, TSprinklesFn, TMediaQueryKey, TSpacingScaleKey>
 ) => ReactNode) => {
   const WithStackComponent = (

@@ -1,5 +1,5 @@
 export const globals = [
-  /*'-moz-initial', */
+  /* '-moz-initial', */
   'inherit',
   'initial',
   'revert',

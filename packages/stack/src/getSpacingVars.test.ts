@@ -41,6 +41,17 @@ test('getSpacingVars handles number case', () => {
   });
 });
 
+test('getSpacingVars handles number case', () => {
+  expect(
+    // @ts-expect-error aff
+    getSpacingVars({ vars, prop: 1, spacingScale: numberSpacingScale })
+  ).toStrictEqual({
+    defaultVar: '100px',
+    smVar: '100px',
+    mdVar: '100px',
+  });
+});
+
 test('getSpacingVars handles array case', () => {
   expect(
     getSpacingVars({ vars, prop: ['1', null, '2'], spacingScale })
