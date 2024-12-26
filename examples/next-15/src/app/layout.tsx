@@ -1,5 +1,8 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import './reset.css';
+import './spacing.css';
+import { spacing } from './spacing.css';
 
 const inter = Inter({
   variable: '--font-inter',
@@ -18,10 +21,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className}`}>
-        <header>Example</header>
+      <body
+        className={`${inter.className} ${spacing.spacingFontSizeClasses.body}`}
+      >
+        <header className={spacing.spacingFontSizeClasses.base}>Example</header>
         {children}
-        <footer>© 2025</footer>
+        <footer className={spacing.spacingFontSizeClasses.base}>© 2025</footer>
       </body>
     </html>
   );
