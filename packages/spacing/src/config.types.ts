@@ -1,43 +1,45 @@
-type SpacingViewport = {
+export type SpacingViewport = {
   minSpacing: string;
   maxSpacing: string;
 };
 
-type Spacing<T extends string> = {
+export type Spacing<TMediaQueryKey extends string> = {
   name: string;
-  viewports: Record<T | 'default', SpacingViewport>;
+  viewports: Record<TMediaQueryKey | 'default', SpacingViewport>;
 };
 
-type ResponsiveFontViewport = {
+export type ResponsiveFontViewport = {
   minCapHeight: string;
   maxCapHeight: string;
 };
 
-type ResponsiveFont<T extends string> = {
+export type ResponsiveFont<TMediaQueryKey extends string> = {
   name: string;
-  viewports: Record<T | 'default', ResponsiveFontViewport>;
+  viewports: Record<TMediaQueryKey | 'default', ResponsiveFontViewport>;
+  fontSize: string;
   lineHeight: string;
   capHeightTrim: string;
   baselineTrim: string;
 };
 
-type DefaultResponsiveFont = {
+export type DefaultResponsiveFont = {
   name: string;
-  minCapHeight: string;
-  maxCapHeight: string;
+  // minCapHeight: string;
+  // maxCapHeight: string;
+  fontSize: string;
   lineHeight: string;
   capHeightTrim: string;
   baselineTrim: string;
 };
 
-interface DefaultViewport {
+export type DefaultViewport = {
   minViewportWidth: string;
   maxViewportWidth: string;
   minDefaultSize: string;
   maxDefaultSize: string;
-}
+};
 
-interface Viewport extends Omit<DefaultViewport, 'defaultSpacingName'> {
+export interface Viewport extends Omit<DefaultViewport, 'defaultSpacingName'> {
   query: string;
 }
 
