@@ -2,8 +2,7 @@ import { Config } from '@butter-cream/spacing';
 import { createStyleObject } from '@capsizecss/core';
 import fontMetrics from '@capsizecss/metrics/inter';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const mediaQueries = {
+export const mediaQueries = {
   md: '48rem',
   lg: '64rem',
 } as const;
@@ -83,6 +82,57 @@ export const config: Config<keyof typeof mediaQueries> = {
         lg: {
           minSpacing: '1.375',
           maxSpacing: '1.5',
+        },
+      },
+    },
+    {
+      name: 'xlarge',
+      viewports: {
+        default: {
+          minSpacing: '1.125',
+          maxSpacing: '1.25',
+        },
+        md: {
+          minSpacing: '1.25',
+          maxSpacing: '1.75',
+        },
+        lg: {
+          minSpacing: '1.75',
+          maxSpacing: '3',
+        },
+      },
+    },
+    {
+      name: 'xxlarge',
+      viewports: {
+        default: {
+          minSpacing: '1.125',
+          maxSpacing: '1.25',
+        },
+        md: {
+          minSpacing: '1.25',
+          maxSpacing: '2.5',
+        },
+        lg: {
+          minSpacing: '2.5',
+          maxSpacing: '4.5',
+        },
+      },
+    },
+    {
+      name: 'xxxlarge',
+      viewports: {
+        default: {
+          minSpacing: '1.125',
+          maxSpacing: '1.25',
+        },
+        md: {
+          minSpacing: '1.25',
+          maxSpacing: '3.25',
+        },
+        lg: {
+          minSpacing: '3.25',
+          maxSpacing: '6',
         },
       },
     },
