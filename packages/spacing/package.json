@@ -1,6 +1,6 @@
 {
   "name": "@butter-cream/spacing",
-  "version": "1.0.0-alpha.1",
+  "version": "1.0.0-alpha.2",
   "license": "MIT",
   "files": [
     "dist"
@@ -28,6 +28,11 @@
     "@vanilla-extract/css-utils": "0.1.4",
     "@vanilla-extract/sprinkles": "^1.5.2",
     "lodash-es": "4.17.21"
+  },
+  "peerDependencies": {
+    "@vanilla-extract/css": "^1.11.0",
+    "@vanilla-extract/css-utils": "0.1.4",
+    "@vanilla-extract/sprinkles": "^1.5.2"
   },
   "devDependencies": {
     "@types/lodash-es": "4.17.12",
