@@ -1,13 +1,13 @@
 import { type GlobalStyleRule, style } from '@vanilla-extract/css';
 import { getVarMap } from './getVarMap.css';
 import { getSpacingVarObject } from './getSpacingVarObject.css';
-import { defineProperties } from '@vanilla-extract/sprinkles';
-import { getConditionsFromMedia, globals } from '@butter-cream/core';
+// import { defineProperties } from '@vanilla-extract/sprinkles';
+// import { getConditionsFromMedia, globals } from '@butter-cream/core';
 
 interface CreateStackParams<M extends string> {
   mediaQueries: Record<M, string>;
   defaultMediaQueryKey: M;
-  splitPossibilities: number;
+  // splitPossibilities: number;
 }
 
 export type GlobalStyleMap = Record<
@@ -18,34 +18,36 @@ export type GlobalStyleMap = Record<
 export function createStackStyles<M extends string>({
   defaultMediaQueryKey,
   mediaQueries,
-  splitPossibilities,
+  // splitPossibilities,
 }: CreateStackParams<M>) {
   const stackStyles = style({
-    display: 'flex',
-    flexDirection: 'column',
+    // display: 'flex',
+    // flexDirection: 'column',
   });
 
-  const stackSplitMap = Array.from(
-    { length: splitPossibilities },
-    (_, i) => i + 1
-  ).reduce<Record<number, string>>((accumulator, current) => {
-    accumulator[current] = style({});
-    return accumulator;
-  }, {});
+  // const stackSplitMap = Array.from(
+  //   { length: splitPossibilities },
+  //   (_, i) => i + 1
+  // ).reduce<Record<number, string>>((accumulator, current) => {
+  //   accumulator[current] = style({});
+  //   return accumulator;
+  // }, {});
 
-  const stackGlobalStyleMap = Object.values(
-    stackSplitMap
-  ).reduce<GlobalStyleMap>((accumulator, style, index) => {
-    const selector = `${style} > :nth-child(${index + 2})`;
-    const rule = {
-      marginBlockStart: 'auto',
-    };
-    accumulator[style] = {
-      selector,
-      rule,
-    };
-    return accumulator;
-  }, {});
+  const stackGlobalStyleMap: GlobalStyleMap = {};
+
+  // const stackGlobalStyleMap = Object.values(
+  //   stackSplitMap
+  // ).reduce<GlobalStyleMap>((accumulator, style, index) => {
+  //   const selector = `${style} > :nth-child(${index + 2})`;
+  //   const rule = {
+  //     marginBlockStart: 'auto',
+  //   };
+  //   accumulator[style] = {
+  //     selector,
+  //     rule,
+  //   };
+  //   return accumulator;
+  // }, {});
 
   const stackVarMap = getVarMap(mediaQueries);
 
@@ -71,29 +73,29 @@ export function createStackStyles<M extends string>({
     },
   };
 
-  const stackProperties = defineProperties({
-    ...getConditionsFromMedia<M>({
-      mediaQueries,
-      defaultMediaQueryKey,
-    }),
-    properties: {
-      alignItems: [
-        ...globals,
-        'flex-start',
-        'center',
-        'flex-end',
-        'stretch',
-        'baseline',
-        'auto',
-      ],
-    },
-  });
+  // const stackProperties = defineProperties({
+  //   ...getConditionsFromMedia<M>({
+  //     mediaQueries,
+  //     defaultMediaQueryKey,
+  //   }),
+  //   properties: {
+  //     alignItems: [
+  //       ...globals,
+  //       'flex-start',
+  //       'center',
+  //       'flex-end',
+  //       'stretch',
+  //       'baseline',
+  //       'auto',
+  //     ],
+  //   },
+  // });
 
   return {
     stackStyles,
     stackGlobalStyleMap,
     stackVarMap,
-    stackSplitMap,
-    stackProperties,
+    // stackSplitMap,
+    // stackProperties,
   };
 }
