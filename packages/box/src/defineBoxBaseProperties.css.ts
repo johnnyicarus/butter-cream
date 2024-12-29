@@ -2,7 +2,7 @@ import { defineProperties } from '@vanilla-extract/sprinkles';
 import type { MediaQuerySettings } from './MediaQuerySettings';
 import { globals } from '@butter-cream/core';
 
-export interface DefineBoxBaseParams<TMediaQueryKey extends string | number> {
+export interface DefineBoxBaseParams<TMediaQueryKey extends string> {
   mediaQueries: MediaQuerySettings<TMediaQueryKey>;
 }
 

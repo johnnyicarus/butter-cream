@@ -1,6 +1,6 @@
 {
   "name": "@butter-cream/box",
-  "version": "1.0.0-alpha.13",
+  "version": "1.0.0-alpha.14",
   "license": "MIT",
   "files": [
     "dist"
@@ -23,7 +23,8 @@
     "lint:check": "eslint \"src/*.{ts,tsx}\"",
     "lint:write": "eslint \"src/*.{ts,tsx}\" --fix",
     "format:check": "prettier --check '*.(ts|tsx|json|js)' 'src/**/*.(ts|tsx|json|js)'",
-    "format:write": "prettier --write '*.(ts|tsx|json|js)' 'src/**/*.(ts|tsx|json|js)'"
+    "format:write": "prettier --write '*.(ts|tsx|json|js)' 'src/**/*.(ts|tsx|json|js)'",
+    "test": "vitest"
   },
   "dependencies": {
     "@butter-cream/core": "1.0.0-alpha.6",
@@ -33,6 +34,7 @@
   "devDependencies": {
     "terser": "5.26.0",
     "tsup": "8.0.1",
-    "typescript": "5.3.3"
+    "typescript": "5.3.3",
+    "vitest": "2.1.8"
   }
 }
